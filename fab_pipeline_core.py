@@ -7,7 +7,7 @@ walls = [
     {"id": "W3", "length_mm": 5400, "height_mm": 2700, "has_framing_type": True},
 ]
 
-#QA/QC- BIM Data Check Functions
+#QA- BIM Data Check Functions
 def check_wall(wall):
     if not wall["has_framing_type"]:
         return False, "Framing type missing"
@@ -19,7 +19,7 @@ def check_wall(wall):
 
 passed_walls = []
 
-#Testing Walls using QA Function, eliminating the passed ones for test in the next steps
+#Testing Walls using QA Function, collecting the passed walls for the next step
 for wall in walls:
     passed, message = check_wall(wall)
     print(f"{wall['id']}: passed={passed}, message={message}")
@@ -28,11 +28,11 @@ for wall in walls:
 
 print(passed_walls)
 
-#Rule sets as a dict/json format that represents the differen manufacturer data, limits, parameters etc
+#Rule sets as a dict/json format that represents the different manufacturer data, limits, parameters etc
 RULE_A = {"name": "Standard", "stud_spacing_mm": 400, "panel_width_mm": 1200}
 RULE_B = {"name": "Wide spacing", "stud_spacing_mm": 600, "panel_width_mm": 2400}
 
-#creating a function to make some fab calculations/data checks with using wall data and the manufacturer input 
+#creating a function to make some fab calculations with using wall data and the manufacturer input 
 def calculate_wall_fab(wall, rule):
     stud_count = math.ceil(wall["length_mm"] / rule["stud_spacing_mm"]) + 1
     panel_count = math.ceil(wall["length_mm"] / rule["panel_width_mm"])
